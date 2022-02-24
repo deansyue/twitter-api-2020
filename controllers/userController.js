@@ -6,8 +6,8 @@ const userController = {
   // 使用者頁面
   getUser: (req, res, next) => {
     return User.findByPk(req.params.id, {
-      raw: true,
-      nest: true,
+      // raw: true,
+      // nest: true,
         include: [
           { model: User, as: "Followings"},
           { model: User, as: "Followers"}
@@ -15,9 +15,9 @@ const userController = {
     })
     .then(user => {
       if (!user) throw new Error("User didn't exist!")
-      const followingCount = user.Followings?.length || 0
-      const follwerCount = user.Followers?.length || 0
-      // const isFollowed = user.Followers?.some(id => id === getUser(req).id) || 0
+      const followingCount = user.Followings?.length
+      const follwerCount = user.Followers?.length
+      // const isFollowed = user.Followers?.some(id => id === req.user.id)
       const data = {
         user: user,
         followingCount,
@@ -57,16 +57,14 @@ const userController = {
       order: [['createdAt', 'DESC']]
     })
     .then(tweet => {
-      // tweets = tweets.map(tweet => {
-      //   ...tweet.dataValues,
-      //   likedCount: tweet.Likes.length,
-      //   repliedCount: tweet.Replies.length,
-      //   isLiked: tweet.Likes.map(user => user.UserId).includes(req.user.id)
-      // })
+      const tweets = tweet.map(tweet => ({
+        ...tweet.dataValues,
+        likedCount: tweet.Likes.length,
+        repliedCount: tweet.Replies.length,
+        // isLiked: tweet.Likes.map(user => user.UserId).includes(req.user.id)
+      }))
       const data = {
-        tweet,
-        // likedCount: tweet.Likes.length,
-        // repliedCount: tweet.Replies.length
+        tweets,
       }
       res.json({
         status: 'success',
@@ -77,45 +75,56 @@ const userController = {
   },
   // 喜歡的推文
    getLikedTweet: (req, res, next) => {
-    return Promise.all([
-      User.findByPk(req.params.id, {
-        include: [
-          { model: Like, include: Tweet},
-        ],
-        raw: true,
-        nest: true
-      }),
-      Like.findAll({
-        Where: { UserId: req.params.id },
-        include: [
-          { model: Tweet, include: [ //後端的優化!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            { model: Like },
-            { model: User },
-            { model: Reply }
-          ] },
-        ],
-      raw: true,
-      nest: true
+     return Like.findAll({
+       where: { UserId: req.params.id },
+       include: [{
+         model: Tweet,
+         include: [{ model: User },
+         Reply,
+         Like
+         ]
+       }],
      })
-    ])
-    .then(([user, like]) => {
-      if (!user) throw new Error("User didn't exist!")
-      const likedTweet = like.Tweet // 傳回喜歡的推特陣列
-      const likedCount = like.Tweet.Like.length
-      const repliedCount = like.Tweet.Reply.length
-      const data = {
-        user,
-        likedTweet,
-        likedCount,
-        repliedCount
-      }
+     .then(likes => {
+       likes = likes.map(like => ({
+         ...like.dataValues,
+       }))
+       res.json({
+        status: 'success',
+        data: likes
+      })
+    })
+    .catch(err => next(err))
+  },
+  getFollowings: (req, res, next) => {
+    return User.findByPk(req.params.id, {
+      include: [{
+        model: User, as: 'Followings'
+      }]
+    })
+    .then(followings => {
       res.json({
         status: 'success',
-        data
+        data: followings
+      })
+    })
+    .catch(err => next(err))
+  },
+  getFollowers: (req, res, next) => {
+    return User.findByPk(req.params.id, {
+      include: [{
+        model: User, as: 'Followers'
+      }]
+    })
+    .then(followers => {
+      res.json({
+        status: 'success',
+        data: followers
       })
     })
     .catch(err => next(err))
   }
+
 
 }
 
