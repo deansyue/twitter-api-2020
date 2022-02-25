@@ -77,19 +77,10 @@ const userController = {
     })
     .then(user => {
       if (!user) throw new Error("User didn't exist!")
-      const followingCount = user.Followings?.length
-      const follwerCount = user.Followers?.length
-      const isFollowed = user.Followers?.some(id => id === req.currentUser.id)
-      const data = {
-        user: user,
-        followingCount,
-        follwerCount,
-        isFollowed
-      }
-      res.json({
-        status: 'success',
-        data
-      })
+      user.dataValues.followingCount = user.Followings?.length
+      user.dataValues.follwerCount = user.Followers?.length
+      user.dataValues.isFollowed = user.Followers?.some(id => id === req.currentUser.id)
+      res.json(user)
     })
     .catch(err => next(err))
   },
@@ -149,8 +140,8 @@ const userController = {
         model: User, as: 'Followings'
       }]
     })
-    .then(followings => {
-      res.json(followings)
+    .then(user => {
+      res.json(user.Followings)
     })
     .catch(err => next(err))
   },
@@ -160,8 +151,8 @@ const userController = {
         model: User, as: 'Followers'
       }]
     })
-    .then(followers => {
-      res.json(followers)
+    .then(user => {
+      res.json(user.Followers)
     })
     .catch(err => next(err))
   },

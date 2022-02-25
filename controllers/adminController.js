@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { User, Tweet, Like, Reply } = require('../models')
 const { getUser } =require('../_helpers')
+const sequelize = require('sequelize')
 
 const adminController = {
   signIn: (req, res, next) => {

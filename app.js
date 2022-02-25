@@ -21,7 +21,7 @@ app.use(express.json())
 // 設定讓外部傳入的 request 可以取得 /upload 路徑
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
-app.use(router)
+app.use('/api', router)
 
 // app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

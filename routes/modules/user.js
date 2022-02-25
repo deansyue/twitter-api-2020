@@ -1,20 +1,13 @@
 const express = require('express')
-const passport = require('../config/passport')
-const userController = require('../controllers/userController')
-const adminController = require('../controllers/adminController')
+const passport = require('../../config/passport')
+const userController = require('../../controllers/userController')
 const router = express.Router()
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
-const upload = require('../middleware/multer')
+const { authenticated } = require('../../middleware/auth')
+const upload = require('../../middleware/multer')
 
 //登入註冊功能
 router.post('/signin', passport.authenticate('local', { session: false }), userController.signIn)
-router.post('/signup', userController.signUp)
-
-// admin 
-router.post('/admin/signin', passport.authenticate('local', { session: false }), adminController.signIn)
-router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
-router.get('/admin/tweets', authenticated, authenticatedAdmin, adminController.getTweets)
-router.delete('/admin/tweets/:id', authenticated, authenticatedAdmin, adminController.deleteTweet)
+router.post('/', userController.signUp)
 
 // user
 router.get('/users/:id/replied_tweets', userController.getRepliedTweets)
