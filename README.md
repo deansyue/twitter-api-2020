@@ -1,7 +1,6 @@
 # Simple Twitter API
 此專案為處理前端使用者所傳送過來的Request，並回傳所需的Twitter資料庫的相關JSON格式資料
 
-[API URL](https://thawing-citadel-19528.herokuapp.com/)
 
 ## Features 產品功能
 * 使用者能註冊/登入帳戶
@@ -21,7 +20,7 @@
 ## Installing 專案安裝流程
 1. 打開您的終端機(terminal)，複製(clone)專案至本機
 ```
-git clone https://github.com/hmrvc/twitter-api-2020
+git clone https://github.com/hmrvc/twitter-api-2020.git
 ```
 
 2. 進入存放此專案資料夾
@@ -40,27 +39,27 @@ JWT_SECRET=SKIP
 IMGUR_CLIENT_ID=SKIP
 ```
 
-4. 使用SQL應用程式，建立資料庫，並設定資料庫相關資訊與config/config.json一致
+5. 使用SQL應用程式，建立資料庫，並設定資料庫相關資訊與config/config.json一致
 ```
 create database ac_twitter_workspace;
 ```
 
-5. 建立資料表
+6. 建立資料表
 ```
 npx sequelize db:migrate
 ```
 
-4. 創建種子資料
+7. 創建種子資料
 ```
 npx sequelize db:seed:all
 ```
 
-5. 使用腳本，即可啟動伺服器
+8. 使用腳本，即可啟動伺服器
 ```
 npm run dev
 ```
 
-6. 當終端機(terminal)出現以下文字，代表伺服器已啟動
+9. 當終端機(terminal)出現以下文字，代表伺服器已啟動
 ```
 Example app listening on port !
 ```
