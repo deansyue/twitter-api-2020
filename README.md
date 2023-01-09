@@ -23,7 +23,7 @@
 ## Installing 專案安裝流程
 1. 打開您的終端機(terminal)，複製(clone)專案至本機
 ```
-git clone https://github.com/hmrvc/twitter-api-2020.git
+git clone https://github.com/deansyue/twitter-api-2020.git
 ```
 
 2. 進入存放此專案資料夾
@@ -102,8 +102,8 @@ user5
 
 ## Related Links 相關連結
 ### 前端
-[Github](https://github.com/Joy-Chang-2021/Twitter_project.git) <br>
-[Github Page](https://joy-chang-2021.github.io/Twitter_project/) <br>
+[Github](https://github.com/deansyue/Twitter_project.git) <br>
+[Github Page](https://calm-cliffs-38682.herokuapp.com/) <br>
 
 ### API佈署網站
 
