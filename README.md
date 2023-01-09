@@ -103,7 +103,7 @@ user5
 ## Related Links 相關連結
 ### 前端
 [Github](https://github.com/deansyue/Twitter_project.git) <br>
-[Github Page](https://calm-cliffs-38682.herokuapp.com/) <br>
+[Github Page](https://deansyue.github.io/Twitter_project/) <br>
 
 ### API佈署網站
 
